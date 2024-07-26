@@ -32,6 +32,7 @@
     "test": "vscode-test"
   },
   "devDependencies": {
+    "@types/mime-types": "^2.1.4",
     "@types/mocha": "^10.0.7",
     "@types/node": "20.x",
     "@types/vscode": "^1.91.0",
@@ -45,8 +46,7 @@
     "typescript": "^5.4.5"
   },
   "dependencies": {
-    "@huggingface/hub": "^0.15.1",
     "@huggingface/inference": "^2.8.0",
-    "onnxjs": "^0.1.8"
+    "node-html-parser": "^6.1.13"
   }
 }
