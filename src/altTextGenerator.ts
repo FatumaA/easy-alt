@@ -32,9 +32,6 @@ export async function generateAndInsertAltText(
 	const imgSrc = imgTag.getAttribute("src");
 	if (!imgSrc) {
 		console.error("No src attribute found in the img tag");
-		vscode.window.showErrorMessage(
-			"Failed to find src attribute in the img tag"
-		);
 		return null;
 	}
 
@@ -48,15 +45,15 @@ export async function generateAndInsertAltText(
 			altText = await generateAltTextForLocalImage(document, imgSrc);
 		}
 
-		if (altText) {
-			vscode.window.showInformationMessage(`Alt text generated: ${altText}`);
-			return altText;
-		} else {
-			throw new Error("Failed to generate alt text: No text was generated");
+		if (!altText) {
+			console.log("No alt text generated");
+			return null;
 		}
+		vscode.window.showInformationMessage(`Alt text generated: ${altText}`);
+		return altText;
 	} catch (error) {
 		console.error("Error in generateAndInsertAltText:", error);
-		vscode.window.showErrorMessage(`Failed to generate alt text: ${error}`);
+		vscode.window.showErrorMessage("Failed to generate alt text");
 		return null;
 	}
 }
@@ -79,10 +76,7 @@ async function generateAltTextForRemoteImage(
 		return imgDesc.generated_text;
 	} catch (error) {
 		console.error("Error generating alt text for remote image:", error);
-		vscode.window.showErrorMessage(
-			`Failed to generate alt text for remote image: ${error}`
-		);
-		return null;
+		throw error;
 	}
 }
 

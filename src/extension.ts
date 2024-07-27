@@ -11,7 +11,7 @@ export function activate(context: vscode.ExtensionContext) {
 	console.log("Extension activated");
 	vscode.window.showInformationMessage("Easy Alt Extension Activated");
 
-	statusBarItem = vscode.window.createStatusBarItem(
+	const statusBarItem = vscode.window.createStatusBarItem(
 		vscode.StatusBarAlignment.Right,
 		100
 	);

@@ -1,21 +1,25 @@
 import * as vscode from "vscode";
 import { parse, HTMLElement } from "node-html-parser";
 import { generateAndInsertAltText } from "./altTextGenerator";
+import { debounce } from "./utils";
 
 let typingTimeout: NodeJS.Timeout | null = null;
 const processedImages = new Set<string>();
 
+const debouncedProcessDocument = debounce(
+	(document: vscode.TextDocument, statusBarItem: vscode.StatusBarItem) => {
+		processDocument(document, statusBarItem);
+	},
+	2000
+);
+
 export function handleDocumentChange(event: vscode.TextDocumentChangeEvent) {
 	if (["html", "jsx", "tsx"].includes(event.document.languageId)) {
-		if (typingTimeout) {
-			clearTimeout(typingTimeout);
-		}
-		typingTimeout = setTimeout(() => {
-			processDocument(
-				event.document,
-				vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 100)
-			);
-		}, 2000); // Wait 2 seconds after the last change
+		const statusBarItem = vscode.window.createStatusBarItem(
+			vscode.StatusBarAlignment.Right,
+			100
+		);
+		debouncedProcessDocument(event.document, statusBarItem);
 	}
 }
 
@@ -30,7 +34,7 @@ export async function processDocument(
 		let text = document.getText();
 		const root = parse(text, { parseNoneClosedTags: true });
 		const imgTags = root.querySelectorAll("img");
-		console.log(`Found ${imgTags.length} img tags`);
+		console.log(`In ProcessDocument: Found ${imgTags.length} img tags`);
 
 		let hasChanges = false;
 
@@ -67,7 +71,7 @@ export async function processDocument(
 		}
 	} catch (error) {
 		console.error("Error in processDocument:", error);
-		vscode.window.showErrorMessage(`Error processing document: ${error}`);
+		vscode.window.showErrorMessage("Error processing document");
 	} finally {
 		statusBarItem.hide();
 	}
