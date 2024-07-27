@@ -11,7 +11,7 @@ Submission article:
 - Works with both local and remote images.
 - Provides real-time feedback through the VS Code status bar.
 
-![Easy Alt in Action](easy-alt-g.mp4)
+![Easy Alt in Action](https://github.com/FatumaA/easy-alt/blob/main/easy-alt-g.mp4)
 
 ## Requirements
 
