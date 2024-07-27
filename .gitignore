@@ -4,3 +4,9 @@ dist
 node_modules
 .vscode-test/
 *.vsix
+
+error.log
+combined.log
+
+# Sentry Config File
+.env.sentry-build-plugin
