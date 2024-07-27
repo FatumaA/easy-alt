@@ -1,71 +1,68 @@
 # About easy-alt
 
-This is an vscode extension that enables inline AI generated alt text suggestions for your img tags. This is a submission for Hashnode's AI-for-Tomorrow hackathon.
+Easy-alt is a VS Code extension that enables inline AI-generated alt text suggestions for your img tags. This extension is a submission for Hashnode's AI-for-Tomorrow hackathon.
+
+Submission article:
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+- Automatically generates alt text for images in HTML, JSX, and TSX files.
+- Uses the HuggingFace API to generate accurate and descriptive alt text.
+- Works with both local and remote images.
+- Provides real-time feedback through the VS Code status bar.
 
-For example if there is an image subfolder under your extension project workspace:
-
-\!\[feature X\]\(images/feature-x.png\)
-
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+![Easy Alt in Action](easy-alt-g.mp4)
 
 ## Requirements
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+- VS Code version 1.60.0 or higher
+- A HuggingFace account and API token
 
 ## Extension Settings
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
-
-For example:
-
 This extension contributes the following settings:
 
-- `myExtension.enable`: Enable/disable this extension.
-- `myExtension.thing`: Set to `blah` to do something.
+- `easyAlt.hfToken`: Your HuggingFace API token for generating alt text.
 
 ## Known Issues
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+- The extension may process the document multiple times if rapid changes are made.
+- Large images or slow internet connections may cause delays in alt text generation.
 
 ## Release Notes
 
-Users appreciate release notes as you update your extension.
-
 ### 1.0.0
 
-Initial release of ...
+Initial release of easy-alt:
 
-### 1.0.1
+- Automatic alt text generation for img tags
+- Support for HTML, JSX, and TSX files
+- Integration with HuggingFace API
 
-Fixed issue #.
+## How to Use
 
-### 1.1.0
+1. Install the extension from the VS Code Marketplace.
+2. Set your HuggingFace API token:
+   - Option 1: In VS Code settings, search for "Easy Alt" and enter your token in the "Hf Token" field.
+   - Option 2: Set an environment variable named `HF_TOKEN` with your API token.
+3. Open an HTML, JSX, or TSX file containing img tags.
+4. The extension will automatically process the document and generate alt text for images without existing alt attributes.
+5. A status bar item will show when the extension is processing images.
 
-Added features X, Y, and Z.
+## Privacy and Security
+
+This extension sends image data to the HuggingFace API for processing. Please ensure you have the rights to use and process any images in your project.
+
+## Feedback and Contributions
+
+We welcome feedback and contributions! Please file issues and pull requests on our GitHub repository.
 
 ---
 
 ## Following extension guidelines
 
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
+This extension follows the VS Code extension guidelines:
 
 - [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
 
-## Working with Markdown
-
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
-
-- Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-- Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-- Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
-
-## For more information
-
-- [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-- [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+**Enjoy using easy-alt!**
