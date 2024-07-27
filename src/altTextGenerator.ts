@@ -1,4 +1,5 @@
 import * as vscode from "vscode";
+const logger = require("../logger");
 import * as path from "path";
 import * as fs from "fs";
 import { HTMLElement } from "node-html-parser";
@@ -31,11 +32,11 @@ export async function generateAndInsertAltText(
 
 	const imgSrc = imgTag.getAttribute("src");
 	if (!imgSrc) {
-		console.error("No src attribute found in the img tag");
+		logger.error("No src attribute found in the img tag");
 		return null;
 	}
 
-	console.log(`Generating alt text for image: ${imgSrc}`);
+	logger.info(`Generating alt text for image: ${imgSrc}`);
 
 	try {
 		let altText;
@@ -46,13 +47,13 @@ export async function generateAndInsertAltText(
 		}
 
 		if (!altText) {
-			console.log("No alt text generated");
+			logger.info("No alt text generated");
 			return null;
 		}
 		vscode.window.showInformationMessage(`Alt text generated: ${altText}`);
 		return altText;
 	} catch (error) {
-		console.error("Error in generateAndInsertAltText:", error);
+		logger.error("Error in generateAndInsertAltText:", error);
 		vscode.window.showErrorMessage("Failed to generate alt text");
 		return null;
 	}
@@ -62,7 +63,7 @@ async function generateAltTextForRemoteImage(
 	imgSrc: string
 ): Promise<string | null> {
 	try {
-		console.log("Generating alt text for remote image:", imgSrc);
+		logger.info("Generating alt text for remote image:", imgSrc);
 
 		const res = await fetch(imgSrc);
 		const blob = await res.blob();
@@ -72,10 +73,10 @@ async function generateAltTextForRemoteImage(
 			model: MODEL,
 		});
 
-		console.log("Generated alt text:", imgDesc.generated_text);
+		logger.info("Generated alt text:", imgDesc.generated_text);
 		return imgDesc.generated_text;
 	} catch (error) {
-		console.error("Error generating alt text for remote image:", error);
+		logger.error("Error generating alt text for remote image:", error);
 		throw error;
 	}
 }
@@ -85,7 +86,7 @@ async function generateAltTextForLocalImage(
 	imgSrc: string
 ): Promise<string | null> {
 	try {
-		console.log("Generating alt text for local image:", imgSrc);
+		logger.info("Generating alt text for local image:", imgSrc);
 
 		const workspaceFolder = vscode.workspace.getWorkspaceFolder(document.uri);
 		if (!workspaceFolder) {
@@ -94,7 +95,7 @@ async function generateAltTextForLocalImage(
 
 		const documentDir = path.dirname(document.uri.fsPath);
 		let imagePath = path.resolve(documentDir, imgSrc);
-		console.log("Full image path:", imagePath);
+		logger.info("Full image path:", imagePath);
 
 		if (!fs.existsSync(imagePath)) {
 			throw new Error(`Image file not found: ${imagePath}`);
@@ -107,7 +108,7 @@ async function generateAltTextForLocalImage(
 			);
 			if (imageFile) {
 				imagePath = path.join(imagePath, imageFile);
-				console.log("Found image in directory:", imagePath);
+				logger.info("Found image in directory:", imagePath);
 			} else {
 				throw new Error(`No image files found in directory: ${imagePath}`);
 			}
@@ -124,10 +125,10 @@ async function generateAltTextForLocalImage(
 			throw new Error("No text generated from the image");
 		}
 
-		console.log("Generated alt text:", imgDesc.generated_text);
+		logger.info("Generated alt text:", imgDesc.generated_text);
 		return imgDesc.generated_text;
 	} catch (error) {
-		console.error("Error generating alt text for local image:", error);
+		logger.error("Error generating alt text for local image:", error);
 		throw error;
 	}
 }

@@ -1,4 +1,5 @@
 import * as vscode from "vscode";
+const logger = require("../logger");
 import { parse, HTMLElement } from "node-html-parser";
 import { generateAndInsertAltText } from "./altTextGenerator";
 import { debounce } from "./utils";
@@ -34,7 +35,7 @@ export async function processDocument(
 		let text = document.getText();
 		const root = parse(text, { parseNoneClosedTags: true });
 		const imgTags = root.querySelectorAll("img");
-		console.log(`In ProcessDocument: Found ${imgTags.length} img tags`);
+		logger.info(`In ProcessDocument: Found ${imgTags.length} img tags`);
 
 		let hasChanges = false;
 
@@ -67,10 +68,10 @@ export async function processDocument(
 				root.toString()
 			);
 			const editResult = await vscode.workspace.applyEdit(edit);
-			console.log(`Edit applied: ${editResult}`);
+			logger.info(`Edit applied: ${editResult}`);
 		}
 	} catch (error) {
-		console.error("Error in processDocument:", error);
+		logger.error("Error in processDocument:", error);
 		vscode.window.showErrorMessage("Error processing document");
 	} finally {
 		statusBarItem.hide();
