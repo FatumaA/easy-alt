@@ -1,18 +1,31 @@
 import * as vscode from "vscode";
-import { parse } from "node-html-parser";
-import { debounce } from "./utils";
+import { parse, HTMLElement } from "node-html-parser";
 import { generateAndInsertAltText } from "./altTextGenerator";
 
-export const handleDocumentChange = debounce(
-	(event: vscode.TextDocumentChangeEvent) => {
-		if (["html", "jsx", "tsx"].includes(event.document.languageId)) {
-			processDocument(event.document);
-		}
-	},
-	300
-);
+let typingTimeout: NodeJS.Timeout | null = null;
+const processedImages = new Set<string>();
 
-export async function processDocument(document: vscode.TextDocument) {
+export function handleDocumentChange(event: vscode.TextDocumentChangeEvent) {
+	if (["html", "jsx", "tsx"].includes(event.document.languageId)) {
+		if (typingTimeout) {
+			clearTimeout(typingTimeout);
+		}
+		typingTimeout = setTimeout(() => {
+			processDocument(
+				event.document,
+				vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 100)
+			);
+		}, 2000); // Wait 2 seconds after the last change
+	}
+}
+
+export async function processDocument(
+	document: vscode.TextDocument,
+	statusBarItem: vscode.StatusBarItem
+) {
+	statusBarItem.text = "$(sync~spin) Generating alt text...";
+	statusBarItem.show();
+
 	try {
 		let text = document.getText();
 		const root = parse(text, { parseNoneClosedTags: true });
@@ -27,10 +40,16 @@ export async function processDocument(document: vscode.TextDocument) {
 				hasChanges = true;
 			}
 
-			if (!imgTag.getAttribute("alt")) {
+			const imgSrc = imgTag.getAttribute("src");
+			if (
+				imgSrc &&
+				!processedImages.has(imgSrc) &&
+				!imgTag.getAttribute("alt")
+			) {
 				const altText = await generateAndInsertAltText(document, imgTag);
 				if (altText) {
 					imgTag.setAttribute("alt", altText);
+					processedImages.add(imgSrc);
 					hasChanges = true;
 				}
 			}
@@ -49,5 +68,7 @@ export async function processDocument(document: vscode.TextDocument) {
 	} catch (error) {
 		console.error("Error in processDocument:", error);
 		vscode.window.showErrorMessage(`Error processing document: ${error}`);
+	} finally {
+		statusBarItem.hide();
 	}
 }
