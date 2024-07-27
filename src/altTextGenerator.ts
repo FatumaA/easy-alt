@@ -2,16 +2,33 @@ import * as vscode from "vscode";
 import * as path from "path";
 import * as fs from "fs";
 import { HTMLElement } from "node-html-parser";
+
+const envPath = path.resolve(__dirname, "../.env");
+require("dotenv").config({ path: envPath });
+
 const hfIn = require("@huggingface/inference");
 
-const HF_TOKEN = process.env.HF_TOKEN;
-const MODEL = "nlpconnect/vit-gpt2-image-captioning";
+function getHfToken(): string | undefined {
+	const config = vscode.workspace.getConfiguration("easyAlt");
+	return config.get("hfToken") ?? process.env.HF_TOKEN;
+}
+
+const HF_TOKEN = getHfToken();
 const hf = new hfIn.HfInference(HF_TOKEN);
+const MODEL = "nlpconnect/vit-gpt2-image-captioning";
 
 export async function generateAndInsertAltText(
 	document: vscode.TextDocument,
 	imgTag: HTMLElement
 ): Promise<string | null> {
+	const HF_TOKEN = getHfToken();
+	if (!HF_TOKEN) {
+		vscode.window.showErrorMessage(
+			"HuggingFace token not set. Please set it in the extension settings."
+		);
+		return null;
+	}
+
 	const imgSrc = imgTag.getAttribute("src");
 	if (!imgSrc) {
 		console.error("No src attribute found in the img tag");
