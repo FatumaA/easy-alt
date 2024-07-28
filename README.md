@@ -24,6 +24,25 @@ This extension contributes the following settings:
 
 - `easyAlt.hfToken`: Your HuggingFace API token for generating alt text.
 
+### How to Configure
+
+To set your HuggingFace API token:
+
+1. **Open the Settings JSON**:
+
+   - Press `Ctrl + Shift + P` (Windows/Linux) or `Cmd + Shift + P` (macOS) to open the Command Palette.
+   - Type `Preferences: User Settings` and select it.
+
+2. **Edit the `settings.json` File**:
+
+   - Add the following line to the JSON object:
+     ```json
+     "easyAlt.hfToken": "your_huggingface_token"
+     ```
+   - Replace `"your_huggingface_token"` with your actual HuggingFace API token.
+
+3. **Save the File and Restart VSCode**.
+
 ## Known Issues
 
 - The extension may process the document multiple times if rapid changes are made.
