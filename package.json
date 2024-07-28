@@ -1,9 +1,10 @@
 {
   "name": "easy-alt",
-  "displayName": "easy alt",
+  "displayName": "Easy Alt",
   "description": "Inline AI generated alt text for img tags",
   "publisher": "FatumaA",
-  "version": "0.0.1",
+  "version": "0.0.2",
+  "icon": "easy-gradient.png",
   "engines": {
     "vscode": "^1.91.0"
   },
