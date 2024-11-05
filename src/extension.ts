@@ -37,7 +37,6 @@ export function activate(context: vscode.ExtensionContext) {
 		vscode.window.visibleTextEditors.forEach((editor) =>
 			processDocument(editor.document, statusBarItem)
 		);
-		// Your extension logic here
 	} catch (error) {
 		logger.error("An error occurred:", error);
 
