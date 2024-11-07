@@ -1,13 +1,5 @@
 const esbuild = require("esbuild");
 const path = require("path");
-const winston = require("winston");
-
-// Create a simple console logger for build process
-const buildLogger = winston.createLogger({
-	level: "info",
-	format: winston.format.simple(),
-	transports: [new winston.transports.Console()],
-});
 
 const production = process.argv.includes("--production");
 const watch = process.argv.includes("--watch");

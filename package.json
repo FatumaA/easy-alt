@@ -18,17 +18,21 @@
   ],
   "main": "./dist/extension.js",
   "contributes": {
-    "commands": [{
+    "commands": [
+      {
         "command": "easy-alt.generateAlt",
         "title": "Generate Alt Text Suggestions"
-    }],
-    "keybindings": [{
+      }
+    ],
+    "keybindings": [
+      {
         "command": "easy-alt.generateAlt",
         "key": "ctrl+e",
         "mac": "cmd+e",
         "when": "editorTextFocus"
-    }]
-      },
+      }
+    ]
+  },
   "configuration": {
     "title": "Easy Alt",
     "properties": {
@@ -70,7 +74,6 @@
   "dependencies": {
     "@huggingface/inference": "^2.8.0",
     "dotenv": "^16.4.5",
-    "node-html-parser": "^6.1.13",
-    "winston": "^3.13.1"
+    "node-html-parser": "^6.1.13"
   }
 }
