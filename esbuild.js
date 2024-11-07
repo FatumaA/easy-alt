@@ -1,5 +1,4 @@
 const esbuild = require("esbuild");
-const { sentryEsbuildPlugin } = require("@sentry/esbuild-plugin");
 const path = require("path");
 const winston = require("winston");
 
@@ -46,14 +45,7 @@ async function main() {
 			format: "cjs",
 			sourcemap: true,
 			minify: production,
-			plugins: [
-				esbuildProblemMatcherPlugin,
-				sentryEsbuildPlugin({
-					authToken: process.env.SENTRY_AUTH_TOKEN,
-					org: "hijabi-coder",
-					project: "node",
-				}),
-			],
+			plugins: [esbuildProblemMatcherPlugin],
 			loader: {
 				".node": "file",
 			},
