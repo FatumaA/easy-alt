@@ -17,7 +17,18 @@
     "onLanguage:tsx"
   ],
   "main": "./dist/extension.js",
-  "contributes": {},
+  "contributes": {
+    "commands": [{
+        "command": "easy-alt.generateAlt",
+        "title": "Generate Alt Text Suggestions"
+    }],
+    "keybindings": [{
+        "command": "easy-alt.generateAlt",
+        "key": "ctrl+e",
+        "mac": "cmd+e",
+        "when": "editorTextFocus"
+    }]
+      },
   "configuration": {
     "title": "Easy Alt",
     "properties": {
@@ -58,13 +69,8 @@
   },
   "dependencies": {
     "@huggingface/inference": "^2.8.0",
-    "@sentry/esbuild-plugin": "^2.21.1",
-    "@sentry/node": "^7.1.1",
-    "@sentry/profiling-node": "^8.20.0",
     "dotenv": "^16.4.5",
-    "esbuild-plugin-copy": "^2.1.1",
     "node-html-parser": "^6.1.13",
-    "winston": "^3.13.1",
-    "winston-transport-sentry-node": "^2.8.0"
+    "winston": "^3.13.1"
   }
 }
