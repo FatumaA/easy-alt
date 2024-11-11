@@ -1,4 +1,4 @@
-![A screenshot of showing alt attribute of an image tag with a dropdown saying "An arafed cat wearing sunglasses and a pink jacket sits on a bed" with an image of the cat to the left](https://github.com/user-attachments/assets/ec5ac877-0317-495c-92d5-e17e0794e3f6)
+![A screenshot of showing alt attribute of an image tag with a dropdown saying "An arafed cat wearing sunglasses and a pink jacket on a bed" with an image of the cat to the left](https://github.com/user-attachments/assets/ec5ac877-0317-495c-92d5-e17e0794e3f6)
 
 # About easy-alt
 
