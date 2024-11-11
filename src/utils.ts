@@ -8,7 +8,7 @@ export const initModel = async () => {
 	const HfInference = (await import("@huggingface/inference")).HfInference;
 
 	const hfToken =
-		vscode.workspace.getConfiguration("easyAlt").get("hfToken") ??
+		vscode.workspace.getConfiguration("easyAlt").get("hfToken") ||
 		process.env.HF_TOKEN;
 
 	if (!hfToken) {
@@ -17,11 +17,10 @@ export const initModel = async () => {
 		);
 		return;
 	}
-	captioner = new HfInference(hfToken);
+	captioner = new HfInference(hfToken as string);
 
 	return captioner;
 };
-
 export const downloadImage = async (url: string): Promise<Buffer> => {
 	try {
 		const response = await fetch(url);
