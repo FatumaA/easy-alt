@@ -4,6 +4,7 @@
   "description": "Inline AI generated alt text for img tags",
   "publisher": "FatumaA",
   "version": "0.0.4",
+  "repository": "https://github.com/FatumaA/easy-alt",
   "icon": "easy-gradient.png",
   "engines": {
     "vscode": "^1.91.0"
