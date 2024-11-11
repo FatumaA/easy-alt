@@ -1,3 +1,5 @@
+![A screenshot of showing alt attribute of an image tag with a dropdown saying "An arafed cat wearing sunglasses and a pink jacket sits on a bed" with an image of the cat to the left](https://github.com/user-attachments/assets/ec5ac877-0317-495c-92d5-e17e0794e3f6)
+
 # About easy-alt
 
 Easy-alt is a VS Code extension that enables inline AI-generated alt text suggestions for your img tags. This extension was originally a submission for Hashnode's AI-for-Tomorrow hackathon.
