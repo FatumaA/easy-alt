@@ -7,7 +7,9 @@ export const initModel = async () => {
 	let captioner: any;
 	const HfInference = (await import("@huggingface/inference")).HfInference;
 
-	const hfToken = process.env.HF_TOKEN;
+	const hfToken =
+		vscode.workspace.getConfiguration("easyAlt").get("hfToken") ??
+		process.env.HF_TOKEN;
 
 	if (!hfToken) {
 		vscode.window.showErrorMessage(
