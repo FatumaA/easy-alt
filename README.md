@@ -1,12 +1,12 @@
 # About easy-alt
 
-Easy-alt is a VS Code extension that enables inline AI-generated alt text suggestions for your img tags. This extension is a submission for Hashnode's AI-for-Tomorrow hackathon.
+Easy-alt is a VS Code extension that enables inline AI-generated alt text suggestions for your img tags. This extension was originally a submission for Hashnode's AI-for-Tomorrow hackathon.
 
-Submission article:
+[This is the submission article](https://blog.hijabicoder.dev/auto-add-alt-text-to-img-tags-with-easy-alt-an-ai-powered-vscode-extension)
 
 ## Features
 
-- Automatically generates alt text for images in HTML, JSX, and TSX files.
+- Generates alt text for images in HTML, JSX, and TSX files.
 - Uses the HuggingFace API to generate accurate and descriptive alt text.
 - Works with both local and remote images.
 - Provides real-time feedback through the VS Code status bar.
@@ -42,10 +42,10 @@ To set your HuggingFace API token:
    - Replace `"your_huggingface_token"` with your actual HuggingFace API token.
 
 3. **Save the File and Restart VSCode**.
+4. **When in an Image alt tag, press `Ctrl + E` (Windows/Linux) or `Cmd + E` (macOS) to generate alt text**
 
 ## Known Issues
 
-- The extension may process the document multiple times if rapid changes are made.
 - Large images or slow internet connections may cause delays in alt text generation.
 
 ## Release Notes
@@ -64,9 +64,11 @@ Initial release of easy-alt:
 2. Set your HuggingFace API token:
    - Option 1: In VS Code settings, search for "Easy Alt" and enter your token in the "Hf Token" field.
    - Option 2: Set an environment variable named `HF_TOKEN` with your API token.
-3. Open an HTML, JSX, or TSX file containing img tags.
-4. The extension will automatically process the document and generate alt text for images without existing alt attributes.
-5. A status bar item will show when the extension is processing images.
+3. Open an HTML, JSX, or TSX file containing Image tags.
+4. When in an Image alt tag, press `Ctrl + E` (Windows/Linux) or `Cmd + E` (macOS) to generate alt text.
+5. The generated alt text will show up in a dropdown along with a preview of the image.
+6. Press enter to accept the generated alt text or press escape to cancel.
+7. A status bar item will show when the extension is processing images.
 
 ## Privacy and Security
 
