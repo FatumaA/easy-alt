@@ -72,6 +72,7 @@
     "typescript": "^5.4.5"
   },
   "dependencies": {
+    "@highlight-run/node": "^3.10.1",
     "@huggingface/hub": "^0.19.0",
     "@huggingface/inference": "^2.8.1",
     "dotenv": "^16.4.5",
