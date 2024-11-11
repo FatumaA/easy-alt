@@ -1,14 +1,5 @@
 const esbuild = require("esbuild");
-const { sentryEsbuildPlugin } = require("@sentry/esbuild-plugin");
 const path = require("path");
-const winston = require("winston");
-
-// Create a simple console logger for build process
-const buildLogger = winston.createLogger({
-	level: "info",
-	format: winston.format.simple(),
-	transports: [new winston.transports.Console()],
-});
 
 const production = process.argv.includes("--production");
 const watch = process.argv.includes("--watch");
@@ -20,17 +11,17 @@ const esbuildProblemMatcherPlugin = {
 	name: "esbuild-problem-matcher",
 	setup(build) {
 		build.onStart(() => {
-			buildLogger.info("[watch] build started");
+			console.info("[watch] build started");
 		});
 		build.onEnd((result) => {
 			result.errors.forEach(({ text, location }) => {
-				buildLogger.error(`✘ [ERROR] ${text}`, {
+				console.error(`✘ [ERROR] ${text}`, {
 					file: location.file,
 					line: location.line,
 					column: location.column,
 				});
 			});
-			buildLogger.info("[watch] build finished");
+			console.info("[watch] build finished");
 		});
 	},
 };
@@ -46,14 +37,7 @@ async function main() {
 			format: "cjs",
 			sourcemap: true,
 			minify: production,
-			plugins: [
-				esbuildProblemMatcherPlugin,
-				sentryEsbuildPlugin({
-					authToken: process.env.SENTRY_AUTH_TOKEN,
-					org: "hijabi-coder",
-					project: "node",
-				}),
-			],
+			plugins: [esbuildProblemMatcherPlugin],
 			loader: {
 				".node": "file",
 			},
@@ -62,19 +46,19 @@ async function main() {
 
 		if (watch) {
 			await ctx.watch();
-			buildLogger.info("Watching for changes...");
+			console.info("Watching for changes...");
 		} else {
 			await ctx.rebuild();
 			await ctx.dispose();
-			buildLogger.info("Build completed");
+			console.info("Build completed");
 		}
 	} catch (error) {
-		buildLogger.error("Build failed", { error: error.toString() });
+		console.error("Build failed", { error: error.toString() });
 		process.exit(1);
 	}
 }
 
 main().catch((e) => {
-	buildLogger.error("Unexpected error", { error: e.toString() });
+	console.error("Unexpected error", { error: e.toString() });
 	process.exit(1);
 });
